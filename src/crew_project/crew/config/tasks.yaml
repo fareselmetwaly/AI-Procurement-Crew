@@ -1,0 +1,73 @@
+search_queries_task:
+  description: |
+    {company_name} is looking to buy {product_name} following the '{purchase_strategy}' strategy.
+    Target quantity: {quantity}. Budget constraint: {budget_text}.
+    Important technical specifications to prioritize: {important_specs_text}.
+    Extra requirements: {extra_requirements_text}.
+    The company targets these websites to buy from: {websites_text}.
+    The stores MUST sell and deliver the product locally in {country_name} and price it in {currency}.
+    Brand/Origin rule: {israeli_filter_rule}
+    Current date is {full_date} ({current_date}).
+    Generate at maximum {no_keywords} search queries.
+    The search keywords must be in {language} language.
+    Include {country_name} or {currency} or target site domains in queries when needed to ensure local stores appear.
+    Search keywords must contain specific brands, types, or technologies. Avoid general keywords.
+    The search query must reach an ecommerce product webpage, and not a blog or review article.
+  expected_output: >
+    A JSON object containing a list of suggested search queries.
+
+search_engine_task:
+  description: |
+    The task is to search for {product_name} based on the suggested search queries.
+    Current date is {full_date} ({current_date}). Prioritize fresh, currently available listings.
+    Prioritize stores operating in {country_name} (especially: {websites_text}) that price items in {currency}.
+    Brand/Origin rule: {israeli_filter_rule}
+    You have to collect results from multiple search queries.
+    Ignore any suspicious links or pages that are not ecommerce product pages.
+    Ignore any search results with confidence score less than ({score_th}).
+    The search results will be used to compare prices of products from different websites.
+  expected_output: >
+    A JSON object containing the search results.
+
+web_scraping_task:
+  description: |
+    The task is to extract product details from ecommerce store page URLs.
+    Collect results from multiple page URLs and select the best {top_recommendations_no} products.
+    STRICT CURRENCY RULE: All prices in 'product_current_price' MUST be in {currency} (for {country_name}). Do NOT output prices in USD ($) unless converted or clearly stated alongside {currency}. Prefer listings natively priced in {currency}.
+    ANTI-HALLUCINATION RULE: If web_scraping_tool returns a TOOL_ERROR or fails on a URL, NEVER invent or guess prices, titles, or specs. Skip the failed URL and try another link. If fewer than {top_recommendations_no} valid products can be scraped, output ONLY the verified products.
+    Procurement criteria to evaluate and rank products (agent_recommendation_rank 1-5):
+    - Strategy: {purchase_strategy}
+    - Budget: {budget_text} (for quantity: {quantity})
+    - Important specs: {important_specs_text}
+    - Extra requirements: {extra_requirements_text}
+    - Brand/Origin rule: {israeli_filter_rule}
+  expected_output: >
+    Always a JSON object containing extracted product details.
+
+procurement_report_author_task:
+  description: |
+    Generate a complete, professional HTML procurement report for '{company_name}' regarding purchasing '{product_name}'.
+    Use Bootstrap 5 CSS framework via CDN for a clean, executive layout.
+    Write the report content in {language} language (use dir='rtl' on the <html> tag if language is Arabic, otherwise dir='ltr').
+    CRITICAL DATE RULE: The exact report date is {full_date} ({current_date}). Display this exact date in the report header. NEVER guess a quarter like 'Q2 2026'.
+    CRITICAL CURRENCY RULE: Display ALL prices, budgets, and cost comparisons strictly in {currency} ({country_name} market). Never use '$' unless referring to an explicit foreign conversion note.
+    TRANSPARENCY RULE: Only include verified products from the scraping output. Never invent prices or links. If some URLs failed or fewer products were retrieved than requested, explicitly note that in the Methodology/Limitations section.
+    Incorporate these exact procurement parameters into the analysis and recommendations:
+    - Company: {company_name}
+    - Purchase Strategy: {purchase_strategy}
+    - Quantity: {quantity} | Budget: {budget_text}
+    - Important Specs: {important_specs_text}
+    - Extra Requirements: {extra_requirements_text}
+    - Brand/Origin Filter: {israeli_filter_rule}
+    Structure the report with these sections:
+    1. Executive Summary
+    2. Introduction & Scope
+    3. Methodology
+    4. Findings & Price Comparison Table (include product images, clickable store links, specs, and prices in {currency})
+    5. Analysis
+    6. Recommendations (ranked best to worst)
+    7. Conclusion
+    8. Appendices
+    STRICT OUTPUT FORMAT: Output ONLY raw HTML starting immediately with '<!DOCTYPE html>' and ending with '</html>'. Do NOT include any introductory text, explanations, or markdown code fences like ```html.
+  expected_output: >
+    Raw HTML document starting with <!DOCTYPE html> and ending with </html> with no surrounding text or markdown.

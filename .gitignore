@@ -1,0 +1,21 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+.env
+.venv/
+__pycache__/
+*.pyc
+.temp/
+.crewai/
+.crewai_storage/
+assets/ai-agent-output/
+ai-agent-output/
+*.zip
+crew_project - Copy/

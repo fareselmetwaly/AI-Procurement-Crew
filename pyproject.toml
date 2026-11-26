@@ -1,0 +1,35 @@
+[project]
+name = "crew-project"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "fa14632mo", email = "fa14632mo@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "agentops>=0.4.21",
+    "crewai-tools>=1.15.39",
+    "crewai[agentops,tools]>=1.15.39",
+    "dotenv>=0.9.9",
+    "firecrawl>=4.57.0",
+    "gradio>=6.31.0",
+    "opentelemetry-exporter-otlp-proto-http>=1.45.2",
+    "opik>=2.2.152",
+    "pydantic>=2.12.5",
+    "pypdf>=7.0.0",
+    "scrapegraph-py>=2.3.1",
+    "tavily-python>=0.8.5",
+]
+
+[project.scripts]
+crew-project = "crew_project:main"
+
+[build-system]
+requires = ["uv_build>=0.13.1,<0.14.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.4.0",
+]

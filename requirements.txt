@@ -1,0 +1,10 @@
+pydantic
+crewai[tools,agentops]
+agentops
+crewai
+dotenv
+tavily-python
+scrapegraph-py
+gradio 
+pypdf
+opik
